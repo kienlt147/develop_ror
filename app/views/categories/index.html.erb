@@ -1,0 +1,33 @@
+<div class="starter-template">
+    <h1>Categories</h1>
+    <% if flash[:message] %>
+        <div class="bs-example bs-example-bg-classes">
+            <p class="bg-info"><%= flash[:message] %></p>
+        </div>
+    <% end %>
+    <%= link_to 'Created Categories', new_category_path %>
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Created</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        <% if @categories.blank? %>
+            <tr>
+                <td colspan="4">Data not found!!!</td>
+            </tr>
+        <% else %>
+            <% @categories.each do |category| %>
+            <tr>
+                <td><%= category.id %></td>
+                <td><%=  link_to category.name, edit_category_path(category) %></td>
+                <td><%= category.created_at %></td>
+                <td><%= category.status == Category::ACTIVE ? 'Active' : 'Inactive' %></td>
+                <td><%= link_to 'Delete', category_path(category), method: :delete, data: { confirm: 'Are you sure want deleted?' } %></td>
+            </tr>
+            <% end %>
+        <% end %>
+    </table>
+</div>
